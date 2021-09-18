@@ -1,22 +1,13 @@
+import 'package:json_annotation/json_annotation.dart';  
+part 'titulo.g.dart';
+@JsonSerializable()
 class Titulo {
-  final int id;
-  final String descricao;
-  final double valor;
-  final DateTime vencimento;
+  String? id;
+  String? descricao;
+  double? valor;
+  DateTime? vencimento;
 
-  Titulo({
-    required this.id,
-    required this.descricao,
-    required this.valor,
-    required this.vencimento,
-  });
+  Titulo();
 
-  factory Titulo.fromJson(Map<String, dynamic> json) {
-    return Titulo(
-      id: json['id'],
-      descricao: json['descricao'],
-      valor: json['valor'],
-      vencimento: json['vencimento'],
-    );
-  }
+  factory Titulo.fromJson(Map<String, dynamic> json) => _$TituloFromJson(json);
 }

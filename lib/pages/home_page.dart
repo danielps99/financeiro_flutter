@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:financeiro_flutter/entity/response_page.dart';
+import 'package:financeiro_flutter/entity/titulo.dart';
 import 'package:financeiro_flutter/widget/appbar_principal.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'dart:convert';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -19,6 +22,7 @@ void fetchAlbum() async {
           baseUrl: 'http://localhost:8888/',
           connectTimeout: 5000,
           receiveTimeout: 100000,
+          // responseDecoder: ResponseDecoder.,
           headers: {
             'cliente': 'b787a4ab-30e3-46b6-927b-3660f75cd9df'
           },
@@ -26,15 +30,30 @@ void fetchAlbum() async {
           responseType: ResponseType.plain,
         ));
 
-        String url = 'api/query/TitulosAgendadosDescricaoValorVencimentoOperacao/1';
-        Response response = await dio.post(
+        // String url = 'api/query/TitulosAgendadosDescricaoValorVencimentoOperacao/1';
+        String url = 'api/titulo/13ac5d45-93ea-4aab-acd4-3cac6240510d';
+        // Response<ResponsePage<Titulo>> response = await dio.post(
+          Response response = await dio.get(
             url,
-            data: {},
+            // data: {},
             options: Options(
               contentType: Headers.jsonContentType,
             ),
           );
-      print(response);
+          final jsonData = json.decode(response.data);
+          // Titulo.fromJson(response.data);
+          // print(Titulo.fromJson(response.data));
+      // print(jsonData['page']);
+      // print("fdsfsfsfsfsd");
+
+
+
+      // DE UM FUNCIONAA String url = 'api/titulo/13ac5d45-93ea-4aab-acd4-3cac6240510d';
+      Titulo t = Titulo.fromJson(jsonData);
+      print(t.id);
+      print(t.descricao);
+      print(t.valor);
+      print(t.vencimento);
       
     } on DioError catch (e) {
       debugPrint("MEUEROORO: "+e.message);
@@ -59,7 +78,7 @@ fetchAlbum();
               'counter',
               style: Theme.of(context).textTheme.headline4,
             ),
-            new Flexible(child: createListView())
+            Flexible(child: createListView())
           ],
         ),
       ),
