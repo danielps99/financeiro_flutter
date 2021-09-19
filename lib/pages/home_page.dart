@@ -30,12 +30,12 @@ void fetchAlbum() async {
           responseType: ResponseType.plain,
         ));
 
-        // String url = 'api/query/TitulosAgendadosDescricaoValorVencimentoOperacao/1';
-        String url = 'api/titulo/13ac5d45-93ea-4aab-acd4-3cac6240510d';
-        // Response<ResponsePage<Titulo>> response = await dio.post(
-          Response response = await dio.get(
+        String url = 'api/query/TitulosAgendadosDescricaoValorVencimentoOperacao/1';
+        // String url = 'api/titulo/13ac5d45-93ea-4aab-acd4-3cac6240510d';
+        Response response = await dio.post(
+          // Response response = await dio.get(
             url,
-            // data: {},
+            data: {},
             options: Options(
               contentType: Headers.jsonContentType,
             ),
@@ -44,22 +44,27 @@ void fetchAlbum() async {
           // Titulo.fromJson(response.data);
           // print(Titulo.fromJson(response.data));
       // print(jsonData['page']);
-      // print("fdsfsfsfsfsd");
+      
+
+      ResponsePage<Titulo> r = ResponsePage.fromJson(jsonData);
+      print(r.page);
 
 
+      for (var i = 0; i < r.data.length; i++) {
+        print(r.data[i].vencimento);
+      }
 
       // DE UM FUNCIONAA String url = 'api/titulo/13ac5d45-93ea-4aab-acd4-3cac6240510d';
-      Titulo t = Titulo.fromJson(jsonData);
-      print(t.id);
-      print(t.descricao);
-      print(t.valor);
-      print(t.vencimento);
+      // Titulo t = Titulo.fromJson(jsonData);
+      // print(t.id);
+      // print(t.descricao);
+      // print(t.valor);
+      // print(t.vencimento);
       
     } on DioError catch (e) {
       debugPrint("MEUEROORO: "+e.message);
     }
-  }
-  
+  }  
 
   @override
   Widget build(BuildContext context) {
