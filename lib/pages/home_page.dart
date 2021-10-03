@@ -12,7 +12,6 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
-
 class _HomePageState extends State<HomePage> {
   Future<ResponsePage<Titulo>> fetchAlbum() async {
     try {
@@ -56,13 +55,6 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'HOME:',
-            ),
-            Text(
-              'counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
             Flexible(child: createListView())
           ],
         ),
@@ -102,7 +94,9 @@ class _HomePageState extends State<HomePage> {
                           Row(
                             children: [
                               Text(formatarData(values.data[index].vencimento)),
-                              Spacer(),
+                              const Spacer(),
+                              Text(values.data[index].operacaoString),
+                              const Spacer(),
                               Text(formatarValor(values.data[index].valor)),
                             ],
                           )
